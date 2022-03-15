@@ -26,4 +26,13 @@ router.get('/allblogs', async (req, res) => {
   res.json(result);
 });
 
+router.get('/:id', async (req, res) => {
+  var id = req.params.id
+  var result = await Blogs.findOne({slug: id});
+  if (!result) {
+      res.json({notFound:true});
+  }
+  res.json(result);
+});
+
 module.exports = router;
