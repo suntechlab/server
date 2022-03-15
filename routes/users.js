@@ -15,23 +15,23 @@ var jwt = require("jsonwebtoken");
 // conn.connect();
 // Start with mongoose
 
-var contactEmail = nodemailer.createTransport({
-host: 'suntechlab.com',
-port: 465, // Port
-secure: true, // this is true as port is 465
-    auth: {
-      user: "contact@suntechlab.com",
-      pass: "_1!!A?Bg8RDi",
-    },
-  });
+// var contactEmail = nodemailer.createTransport({
+// host: 'suntechlab.com',
+// port: 465, // Port
+// secure: true, // this is true as port is 465
+//     auth: {
+//       user: "contact@suntechlab.com",
+//       pass: "_1!!A?Bg8RDi",
+//     },
+//   });
   
-  contactEmail.verify((error) => {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Ready to Send");
-    }
-  });
+//   contactEmail.verify((error) => {
+//     if (error) {
+//       console.log(error);
+//     } else {
+//       console.log("Ready to Send");
+//     }
+//   });
 
 
 var Categories = require('../models/categories');
@@ -49,50 +49,50 @@ router.get('/api/:id', async (req, res) => {
     res.json(details);
 });
 
-router.post("/contact",
-[
-  check('first_name').not().isEmpty().withMessage('required').
-  matches(/^[a-zA-Z-' ]*$/).withMessage('Only letters and white space allowed')
-  .isLength({ min: 3, max: 50 })
-  .withMessage('must be at least 3 chars long'),
-  check('last_name').not().isEmpty().withMessage('Last name is required').
-  matches(/^[a-zA-Z-' ]*$/).withMessage('Only letters and white space allowed')
-  .isLength({ min: 3, max: 50 })
-  .withMessage('must be at least 3 chars long'),
-  check('email').not().isEmpty().withMessage('Email is required').isEmail().normalizeEmail()
-  .withMessage('Email address not valid')
-  .isLength({ min: 10, max: 100 })
-  .withMessage('must be at least 10 chars long'),
-  check('message').not().isEmpty().withMessage('Please type your message')
-    .isLength({ min: 5 })
-    .withMessage('must be at least 5 chars long'),
-    check('checkbox').not().isEmpty().withMessage('Must be select the checkbox')
-], (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      // res.json(errors)
-      res.json({ errors: errors.array()})
-  }else{
-    const name = req.body.first_name+" "+req.body.last_name;
-    const email = req.body.email;
-    const company = req.body.company;
-    const phone = req.body.phone;
-    const message = req.body.message; 
-    const mail = {
-      from: "Suntech Lab "+"contact@suntechlab.com",
-      to: "salamsl75m@gmail.com",
-      subject: "Contact Form Message",
-      html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Company: ${company}</p><p>Phone: ${phone}</p><p>Message: ${message}</p>`,
-    };
-    contactEmail.sendMail(mail, (error) => {
-      if (error) {
-        res.json({ status: "failed" });
-      } else {
-        res.json({ status: "sent" });
-      }
-    });  
-  }
-  });
+// router.post("/contact",
+// [
+//   check('first_name').not().isEmpty().withMessage('required').
+//   matches(/^[a-zA-Z-' ]*$/).withMessage('Only letters and white space allowed')
+//   .isLength({ min: 3, max: 50 })
+//   .withMessage('must be at least 3 chars long'),
+//   check('last_name').not().isEmpty().withMessage('Last name is required').
+//   matches(/^[a-zA-Z-' ]*$/).withMessage('Only letters and white space allowed')
+//   .isLength({ min: 3, max: 50 })
+//   .withMessage('must be at least 3 chars long'),
+//   check('email').not().isEmpty().withMessage('Email is required').isEmail().normalizeEmail()
+//   .withMessage('Email address not valid')
+//   .isLength({ min: 10, max: 100 })
+//   .withMessage('must be at least 10 chars long'),
+//   check('message').not().isEmpty().withMessage('Please type your message')
+//     .isLength({ min: 5 })
+//     .withMessage('must be at least 5 chars long'),
+//     check('checkbox').not().isEmpty().withMessage('Must be select the checkbox')
+// ], (req, res) => {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       // res.json(errors)
+//       res.json({ errors: errors.array()})
+//   }else{
+//     const name = req.body.first_name+" "+req.body.last_name;
+//     const email = req.body.email;
+//     const company = req.body.company;
+//     const phone = req.body.phone;
+//     const message = req.body.message; 
+//     const mail = {
+//       from: "Suntech Lab "+"contact@suntechlab.com",
+//       to: "salamsl75m@gmail.com",
+//       subject: "Contact Form Message",
+//       html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Company: ${company}</p><p>Phone: ${phone}</p><p>Message: ${message}</p>`,
+//     };
+//     contactEmail.sendMail(mail, (error) => {
+//       if (error) {
+//         res.json({ status: "failed" });
+//       } else {
+//         res.json({ status: "sent" });
+//       }
+//     });  
+//   }
+//   });
 
 router.get('/:email',async (req, res) => {
      var email = req.params.email
