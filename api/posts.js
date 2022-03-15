@@ -3,6 +3,8 @@ const router = express.Router();
 const multer = require('multer');
 const fs = require('fs');
 var Blogs = require('../models/blogs');
+var Products = require('../models/products');
+var Categories = require('../models/categories');
 /**
  * GET product list.
  *
