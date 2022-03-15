@@ -8,8 +8,8 @@ require('dotenv').config()
 // var postsRouter = require('./routes/posts');
 // var blogsRouter = require('./routes/blogs');
 
-// const product = require("./api/product");
-const posts = require("./api/posts");
+const product = require("./api/product");
+// const posts = require("./api/posts");
 
 
 
@@ -21,8 +21,8 @@ app.use(express.json({ extended: false }));
 // app.use('/users', usersRouter);
 // app.use('/posts', postsRouter);
 // app.use('/blogs', blogsRouter);
-// app.use("/api/product", product);
-app.use("/api/posts", posts);
+app.use("/api/product", product);
+// app.use("/api/posts", posts);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server is running in port ${PORT}`));
