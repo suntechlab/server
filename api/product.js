@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+var Blogs = require('../models/blogs');
 /**
  * GET product list.
  *
@@ -16,6 +16,14 @@ router.get("/", async (req, res) => {
     console.error(error);
     return res.status(500).send("Server error");
   }
+});
+
+router.get('/allblogs', async (req, res) => {
+  var result = await Blogs.find({});
+  if (!result) {
+      return res.status(400).send('Blog not found');
+  }
+  res.json(result);
 });
 
 module.exports = router;
