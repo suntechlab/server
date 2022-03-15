@@ -22,12 +22,12 @@ router.get("/", async (req, res) => {
   }
 });
 
-// const upload = multer({
-//   storage: multer.diskStorage({
-//     destination: './public/images/blog-images',
-//     filename: (req, file, cb) => cb(null, file.originalname),
-//   }),
-// });
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: './public/images/blog-images',
+    filename: (req, file, cb) => cb(null, file.originalname),
+  }),
+});
 
 
 // router.post("/add",upload.array('image', 5), async (req, res) => {
