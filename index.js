@@ -3,10 +3,10 @@ const app = express();
 var mongoose = require("mongoose");
 require('dotenv').config()
 
-var indexRouter = require('./routes/index');
+// var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
-var postsRouter = require('./routes/posts');
-var blogsRouter = require('./routes/blogs');
+// var postsRouter = require('./routes/posts');
+// var blogsRouter = require('./routes/blogs');
 
 const product = require("./api/product");
 
@@ -16,10 +16,10 @@ const connectDB = mongoose.connect(process.env.mongodburl).then(() => console.lo
 
 app.use(express.json({ extended: false }));
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
 // app.use('/users', usersRouter);
-app.use('/posts', postsRouter);
-app.use('/blogs', blogsRouter);
+// app.use('/posts', postsRouter);
+// app.use('/blogs', blogsRouter);
 app.use("/api/product", product);
 
 const PORT = process.env.PORT || 8080;
