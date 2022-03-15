@@ -35,48 +35,5 @@ router.get('/:id', async (req, res) => {
   res.json(result);
 });
 
-router.post('/update/:id',upload.array('image', 5), async (req, res) => {
-  var id = req.params.id
-  var proimages=[];
-  var myFile = req.files
-  if(myFile.length > 0){
-    for(i=0; i<myFile.length; i++){
-      proimages.push(myFile[i].filename);
-  }
-  var result = await Blogs.findOne({_id: id});
-    for (i=0; i<result.image.length; i++) {
-      fs.unlink('public/images/blog-images/'+result.image[i], function (err) {
-        if (err) throw err;
-        console.log('File deleted!');
-    });
-    }
-  }else{
-    var result = await Blogs.findOne({_id: id});
-    for (i=0; i<result.image.length; i++) {
-      proimages.push(result.image[i]);
-    }
-  }
-
-  await Blogs.updateOne(
-    { _id: id },
-    { $set: { title: req.body.title, slug: req.body.slug, shortDescription: req.body.shortDescription, demoLink: req.body.demoLink, content: req.body.content,aInfo:req.body.aInfo, image: proimages, time: Date.now().toString()} },
-    { new: true }
-  );
-  res.json("Blog update successfully")
-});
-
-router.post('/delete/:id', async (req, res) => {
-  var id = req.params.id
-  var result = await Blogs.findOne({_id: id});
-    for (i=0; i<result.image.length; i++) {
-      fs.unlink('public/images/blog-images/'+result.image[i], function (err) {
-        if (err) throw err;
-        console.log('File deleted!');
-    });
-    }
-
-  await Blogs.findOneAndRemove({ _id: id });
-  res.json("Blog delete successfully")
-});
 
 module.exports = router;
