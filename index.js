@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
+const cors = require('cors')
 require('dotenv').config()
 
 const product = require("./api/product");
@@ -10,6 +11,7 @@ const posts = require("./api/posts");
 
 const connectDB = mongoose.connect(process.env.mongodburl).then(() => console.log('Now connected to MongoDB!')).catch(err => console.error('Something went wrong', err));
 
+app.use(cors());
 app.use(express.json({ extended: false }));
 app.use("/api/product", product);
 app.use("/api/posts", posts);
