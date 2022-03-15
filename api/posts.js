@@ -8,7 +8,7 @@ var Categories = require('../models/categories');
 
 const upload = multer({
   storage: multer.diskStorage({
-    destination: './public/images/blog-images',
+    destination: './',
     filename: (req, file, cb) => cb(null, file.originalname),
   }),
 });
