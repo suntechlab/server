@@ -5,6 +5,13 @@ const fs = require('fs');
 var Blogs = require('../models/blogs');
 var Products = require('../models/products');
 var Categories = require('../models/categories');
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: './public/images/blog-images',
+    filename: (req, file, cb) => cb(null, file.originalname),
+  }),
+});
 /**
  * GET product list.
  *
@@ -20,13 +27,6 @@ router.get("/", async (req, res) => {
     console.error(error);
     return res.status(500).send("Server error");
   }
-});
-
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: './public/images/blog-images',
-    filename: (req, file, cb) => cb(null, file.originalname),
-  }),
 });
 
 
