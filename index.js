@@ -8,7 +8,7 @@ require('dotenv').config()
 // var postsRouter = require('./routes/posts');
 var blogsRouter = require('./routes/blogs');
 
-const product = require("./api/product");
+// const product = require("./api/product");
 
 
 
