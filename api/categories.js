@@ -49,12 +49,6 @@ router.get("/", async (req, res) => {
 });
 
 
-router.post("/add", async (req, res) => {
-     
-    res.send(req.body);
-  }
-  });
-// End the mongoose
 
 router.post("/add-new-blog",upload.array('image', 5), async (req, res) => {
         var proimages=[];
