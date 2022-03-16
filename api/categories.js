@@ -12,6 +12,25 @@ const upload = multer({
     filename: (req, file, cb) => cb(null, file.originalname),
   }),
 });
+
+    function createCategory(allCategory, parentId = null){
+        const categoryList = [];
+        if(parentId == null){
+          var category = allCategory.filter(cat => cat.parentId == undefined)
+        }else{
+          var category = allCategory.filter(cat => cat.parentId == parentId)
+        }
+        for(let cate of category){
+          categoryList.push({
+            _id:cate._id,
+            name:cate.name,
+            path:cate.path,
+            slug:cate.slug,
+            children:createCategory(allCategory, cate._id)
+          })
+        }
+        return categoryList;
+      }
 /**
  * GET product list.
  *
@@ -83,10 +102,11 @@ router.post("/add-new-blog",upload.array('image', 5), async (req, res) => {
   });
 router.get('/allcategories', async (req, res) => {
   var result = await Categories.find({});
+      const categoryList = createCategory(categories);    
   if (!result) {
-      return res.status(400).send('Blog not found');
+      return res.status(400).send('Category not found');
   }
-  res.json(result);
+  res.json(categoryList);
 });
 
 router.get('/:id', async (req, res) => {
