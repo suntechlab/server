@@ -50,33 +50,36 @@ router.get("/", async (req, res) => {
 
 
 router.post("/add",upload.array('image', 5), async (req, res) => {
-    //     var proimages=[];
-    //     for(var i=0; i<req.files.length; i++){
-    //         proimages.push(req.files[i].filename);
-    //     }
-    // res.json(req.body)
-    
-  var product = await Products.findOne({title: req.body.title});
-  var category = await Categories.find({});
-  res.json(category)
-  if(product){
-    return res.status(400).send('The product already added');
+  if(req.body.parentId == ''){
+    var parentId = null
+  }else{
+    var parentId = req.body.parentId
+  }
+  var categories = await Categories.findOne({ name: req.body.name, parentId: parentId });
+  if (categories) {
+      return res.status(400).send('The category already added');
   }else{
     var proimages=[];
     for(var i=0; i<req.files.length; i++){
         proimages.push(req.files[i].filename);
     }
-    product = new Products({
-      title: req.body.title,
-      price: req.body.price,
-      procategory: req.body.procategory,
-      subcategory: req.body.subcategory,
-      path:category.path,
-      description: req.body.description,
-      image: proimages,
-      time: Date.now().toString()
-  });
-  await product.save();
+    if(req.body.parentId == 'undefined' || req.body.parentId == ''){
+      var pId = '';
+    }else{
+      var pId = '/'+req.body.parentId;
+    }
+    const categoryObj ={
+      name: req.body.name,
+      slug: slugify(req.body.name),
+      path: pId+'/'+req.body.name,
+      image:proimages
+    }
+    if(req.body.parentId && req.body.parentId !="undefined"){
+      categoryObj.parentId = req.body.parentId
+    }
+    categories = new Categories(categoryObj);
+    await categories.save();
+    res.send(categories);
   }
   });
 // End the mongoose
