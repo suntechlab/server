@@ -50,18 +50,8 @@ router.get("/", async (req, res) => {
 
 
 router.post("/add", async (req, res) => {
-     const categoryObj ={
-      name: req.body.name,
-      slug: slugify(req.body.name),
-      path: req.body.name,
-      image:'test.jpg'
-    }
-    if(req.body.parentId && req.body.parentId !="undefined"){
-      categoryObj.parentId = req.body.parentId
-    }
-    categories = new Categories(categoryObj);
-    await categories.save();
-    res.send(categories);
+     
+    res.send(req.body);
   }
   });
 // End the mongoose
