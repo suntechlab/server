@@ -49,30 +49,12 @@ router.get("/", async (req, res) => {
 });
 
 
-router.post("/add",upload.array('image', 5), async (req, res) => {
-  if(req.body.parentId == ''){
-    var parentId = null
-  }else{
-    var parentId = req.body.parentId
-  }
-  var categories = await Categories.findOne({ name: req.body.name, parentId: parentId });
-  if (categories) {
-      return res.status(400).send('The category already added');
-  }else{
-    var proimages=[];
-    for(var i=0; i<req.files.length; i++){
-        proimages.push(req.files[i].filename);
-    }
-    if(req.body.parentId == 'undefined' || req.body.parentId == ''){
-      var pId = '';
-    }else{
-      var pId = '/'+req.body.parentId;
-    }
-    const categoryObj ={
+router.post("/add", async (req, res) => {
+     const categoryObj ={
       name: req.body.name,
       slug: slugify(req.body.name),
-      path: pId+'/'+req.body.name,
-      image:proimages
+      path: req.body.name,
+      image:'test.jpg'
     }
     if(req.body.parentId && req.body.parentId !="undefined"){
       categoryObj.parentId = req.body.parentId
