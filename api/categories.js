@@ -102,7 +102,7 @@ router.post("/add-new-blog",upload.array('image', 5), async (req, res) => {
   });
 router.get('/allcategories', async (req, res) => {
   var result = await Categories.find({});
-      const categoryList = createCategory(categories);    
+  const categoryList = createCategory(result);    
   if (!result) {
       return res.status(400).send('Category not found');
   }
